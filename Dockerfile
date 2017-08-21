@@ -41,7 +41,7 @@ RUN set -ex \
  && docker-php-ext-enable apcu redis memcached
 
 ENV NEXTCLOUD_VERSION 12.0.2
-VOLUME /var/www/html
+VOLUME /var/www/nextcloud
 
 COPY config/* /usr/src/nextcloud/config/
 

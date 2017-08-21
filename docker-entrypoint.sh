@@ -13,8 +13,8 @@ function directory_empty() {
 
 
 installed_version="0.0.0~unknown"
-if [ -f /var/www/html/version.php ]; then
-    installed_version=$(php -r 'require "/var/www/html/version.php"; echo "$OC_VersionString";')
+if [ -f /var/www/nextcloud/version.php ]; then
+    installed_version=$(php -r 'require "/var/www/nextcloud/version.php"; echo "$OC_VersionString";')
 fi
 image_version=$(php -r 'require "/usr/src/nextcloud/version.php"; echo "$OC_VersionString";')
 
@@ -25,28 +25,28 @@ fi
 
 if version_greater "$image_version" "$installed_version"; then
     if [ "$installed_version" != "0.0.0~unknown" ]; then
-        su - www-data -s /bin/bash -c 'php /var/www/html/occ app:list' > /tmp/list_before
+        su - www-data -s /bin/bash -c 'php /var/www/nextcloud/occ app:list' > /tmp/list_before
     fi
-    rsync -a --delete --exclude /config/ --exclude /data/ --exclude /custom_apps/ --exclude /themes/ /usr/src/nextcloud/ /var/www/html/
+    rsync -a --delete --exclude /config/ --exclude /data/ --exclude /custom_apps/ --exclude /themes/ /usr/src/nextcloud/ /var/www/nextcloud/
 
     for dir in config data themes; do
-        if [ ! -d /var/www/html/"$dir" ] || directory_empty /var/www/html/"$dir"; then
-            cp -arT /usr/src/nextcloud/"$dir" /var/www/html/"$dir"
+        if [ ! -d /var/www/nextcloud/"$dir" ] || directory_empty /var/www/nextcloud/"$dir"; then
+            cp -arT /usr/src/nextcloud/"$dir" /var/www/nextcloud/"$dir"
         fi
     done
 
-    if [ ! -d /var/www/html/custom_apps ] && [ ! -f /var/www/html/config/apps.config.php ]; then
-        cp -a /usr/src/nextcloud/config/apps.config.php /var/www/html/config/apps.config.php
+    if [ ! -d /var/www/nextcloud/custom_apps ] && [ ! -f /var/www/nextcloud/config/apps.config.php ]; then
+        cp -a /usr/src/nextcloud/config/apps.config.php /var/www/nextcloud/config/apps.config.php
     fi
 
-    if [ ! -d /var/www/html/custom_apps ] || directory_empty /var/www/html/custom_apps; then
-        cp -arT /usr/src/nextcloud/custom_apps /var/www/html/custom_apps
+    if [ ! -d /var/www/nextcloud/custom_apps ] || directory_empty /var/www/nextcloud/custom_apps; then
+        cp -arT /usr/src/nextcloud/custom_apps /var/www/nextcloud/custom_apps
     fi
 
     if [ "$installed_version" != "0.0.0~unknown" ]; then
-        su - www-data -s /bin/bash -c 'php /var/www/html/occ upgrade --no-app-disable'
+        su - www-data -s /bin/bash -c 'php /var/www/nextcloud/occ upgrade --no-app-disable'
 
-        su - www-data -s /bin/bash -c 'php /var/www/html/occ app:list' > /tmp/list_after
+        su - www-data -s /bin/bash -c 'php /var/www/nextcloud/occ app:list' > /tmp/list_after
         echo "The following apps have beed disabled:"
         diff <(sed -n "/Enabled:/,/Disabled:/p" /tmp/list_before) <(sed -n "/Enabled:/,/Disabled:/p" /tmp/list_after) | grep '<' | cut -d- -f2 | cut -d: -f1
         rm -f /tmp/list_before /tmp/list_after
