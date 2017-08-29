@@ -85,7 +85,7 @@ COPY config/php/php.ini /etc/php/7.1/fpm/
 COPY config/php/php.ini /etc/php/7.1/cli/
 COPY config/nginx/nginx.conf /etc/nginx/
 
-
+RUN mkdir /run/php
 RUN mkdir /etc/service/fpm
 ADD service/fpm.sh /etc/service/fpm/run
 RUN chmod +x /etc/service/fpm/run
