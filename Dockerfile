@@ -55,8 +55,6 @@ ENV NEXTCLOUD_VERSION 12.0.2
 ENV WWW_PATH /var/www
 ENV NEXTCLOUD_PATH $WWW_PATH/nextcloud
 
-COPY config/* $NEXTCLOUD_PATH/config/
-
 RUN curl -fsSL -o nextcloud.tar.bz2 \
     "https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VERSION}.tar.bz2" \
  && curl -fsSL -o nextcloud.tar.bz2.asc \
@@ -81,6 +79,16 @@ RUN curl -fsSL -o nextcloud.tar.bz2 \
  && chown -R www-data:www-data $NEXTCLOUD_PATH/themes/ \
  && chmod +x $NEXTCLOUD_PATH/occ
 
+
+COPY config/nextcloud/* $NEXTCLOUD_PATH/config/
+COPY config/php/php.ini /etc/php/7.1/fpm/
+COPY config/php/php.ini /etc/php/7.1/cli/
+COPY config/nginx/nginx.conf /etc/nginx/
+
+
+RUN mkdir /etc/service/fpm
+ADD service/fpm.sh /etc/service/fpm/run
+RUN chmod +x /etc/service/fpm/run
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
