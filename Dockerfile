@@ -84,6 +84,8 @@ COPY config/nextcloud/* $NEXTCLOUD_PATH/config/
 COPY config/php/php.ini /etc/php/7.1/fpm/
 COPY config/php/php.ini /etc/php/7.1/cli/
 COPY config/nginx/nginx.conf /etc/nginx/
+RUN ln -s /etc/php/7.1/mods-available/apcu.ini /etc/php/7.1/fpm/conf.d/30-apcu.ini
+RUN ln -s /etc/php/7.1/mods-available/apcu.ini /etc/php/7.1/cli/conf.d/30-apcu.ini
 
 RUN mkdir /run/php
 RUN mkdir /etc/service/fpm
