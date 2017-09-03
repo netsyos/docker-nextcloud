@@ -88,6 +88,8 @@ RUN echo "extension = apcu.so" | tee -a /etc/php/7.1/mods-available/apcu.ini
 RUN ln -s /etc/php/7.1/mods-available/apcu.ini /etc/php/7.1/fpm/conf.d/30-apcu.ini
 RUN ln -s /etc/php/7.1/mods-available/apcu.ini /etc/php/7.1/cli/conf.d/30-apcu.ini
 
+RUN chown -R www-data:www-data $NEXTCLOUD_PATH/
+
 RUN mkdir /run/php
 RUN mkdir /etc/service/fpm
 ADD service/fpm.sh /etc/service/fpm/run
