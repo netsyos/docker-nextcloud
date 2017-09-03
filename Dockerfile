@@ -72,7 +72,7 @@ RUN curl -fsSL -o nextcloud.tar.bz2 \
  && mkdir -p $NEXTCLOUD_PATH/custom_apps \
  && find $NEXTCLOUD_PATH/ -type f -print0 | xargs -0 chmod 0640 \
  && find $NEXTCLOUD_PATH/ -type d -print0 | xargs -0 chmod 0750 \
- && chown -R root:www-data $NEXTCLOUD_PATH/ \
+ && chown -R www-data:www-data $NEXTCLOUD_PATH/ \
  && chown -R www-data:www-data $NEXTCLOUD_PATH/custom_apps/ \
  && chown -R www-data:www-data $NEXTCLOUD_PATH/config/ \
  && chown -R www-data:www-data $NEXTCLOUD_PATH/data/ \
