@@ -95,5 +95,9 @@ RUN mkdir /etc/service/fpm
 ADD service/fpm.sh /etc/service/fpm/run
 RUN chmod +x /etc/service/fpm/run
 
+RUN mkdir /etc/service/logs
+ADD service/logs.sh /etc/service/logs/run
+RUN chmod +x /etc/service/logs/run
+
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
