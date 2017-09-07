@@ -79,7 +79,6 @@ RUN curl -fsSL -o nextcloud.tar.bz2 \
  && chown -R www-data:www-data $NEXTCLOUD_PATH/themes/ \
  && chmod +x $NEXTCLOUD_PATH/occ
 
-
 COPY config/nextcloud/* $NEXTCLOUD_PATH/config/
 COPY config/php/php.ini /etc/php/7.1/fpm/
 COPY config/php/php.ini /etc/php/7.1/cli/
@@ -89,6 +88,8 @@ RUN ln -s /etc/php/7.1/mods-available/apcu.ini /etc/php/7.1/fpm/conf.d/30-apcu.i
 RUN ln -s /etc/php/7.1/mods-available/apcu.ini /etc/php/7.1/cli/conf.d/30-apcu.ini
 
 RUN chown -R www-data:www-data $NEXTCLOUD_PATH/
+
+RUN echo "5/* * * * * www-data php /var/www/nextcloud/occ files:scan --all\n" >> /etc/cron.d/scan
 
 RUN mkdir /run/php
 RUN mkdir /etc/service/fpm
