@@ -89,8 +89,6 @@ RUN ln -s /etc/php/7.1/mods-available/apcu.ini /etc/php/7.1/cli/conf.d/30-apcu.i
 
 RUN chown -R www-data:www-data $NEXTCLOUD_PATH/
 
-RUN echo "5/* * * * * www-data php /var/www/nextcloud/occ files:scan --all\n" >> /etc/cron.d/scan
-
 RUN mkdir /run/php
 RUN mkdir /etc/service/fpm
 ADD service/fpm.sh /etc/service/fpm/run
