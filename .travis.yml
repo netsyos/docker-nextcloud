@@ -9,7 +9,7 @@ env:
   - secure: BM9x+X9zrYmWGoJgcqNvlgoApfsBFQtO7vxf+X+goh4GotxN52p2+LKeFXNVaPZynokMyspHtg6xyjjtP/N1c6+N+KUEkY6o8jkyjfFzO+zJiuqHZiqngi8c6p6Aeihem/CPvyfzM96alxGZhJSEPvquzPAZOxH1nf97x74sl2VZIxgWilGTRunt47WUNAp6BbG6EU4YoPJ1u7s1qdGezJUk+lflZJOT9QU4nNvOx34JkirRULdXozvSLhOAwjyqNLi8wFGUXyy6cOwD1A7MAabl9i+0vjCph3dekkH0kS977VgCFLFxfrGmeOUC9l7hIoQ+avW1ewqwOsXES1DzfiaFoois+Uj3EiyODikq/QwbELQGljxRaHMYYniXapsRA1eG8qWjRyz8PTtqQ+J8QnLxvAvh+pkdF6i23JpzKL34K8omkbl53XqR+yjwlTDnTt7Gf+SqoZQAVKs04ot43WjqPZRblmm8djx+Qp90q4gbX5bxYgBvTsuSGCFmTH+JasLpvjOr9SWoos5aNtW76DQcnAKre86n/EIxYr3sLhoZ37EbrWptzPP5JUwAQ7xzcZmBz4hezB8hCVGwA7s3FPMNd+AaUihYSjOG1cGn5hLzLxCLO48CT86cprTobXHulPL3a5ABl4Luxt/pKStjGs3ynHrMul13kYQsm6Tc3bs=
 script:
 - ls -alh
-- docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
 - export REPO=netsyos/nextcloud
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH;
   fi`
