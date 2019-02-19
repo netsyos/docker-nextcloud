@@ -58,14 +58,12 @@ ENV NEXTCLOUD_PATH $WWW_PATH/nextcloud
 RUN curl -fsSL -o nextcloud.tar.bz2 "https://download.nextcloud.com/server/releases/nextcloud-13.0.11.tar.bz2" \
  && curl -fsSL -o nextcloud.tar.bz2.asc \
     "https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VERSION}.tar.bz2.asc" \
- export GNUPGHOME="$(mktemp -d)" \
+ && export GNUPGHOME="$(mktemp -d)" \
  && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 28806A878AE423A28372792ED75899B9A724937A \
  && gpg --batch --verify nextcloud.tar.bz2.asc nextcloud.tar.bz2 \
  && rm -r "$GNUPGHOME" nextcloud.tar.bz2.asc \
- && tar -xjf nextcloud.tar.bz2 -C $WWW_PATH/
-
- # https://docs.nextcloud.com/server/11/admin_manual/installation/installation_wizard.html#setting-strong-directory-permissions
- RUN rm nextcloud.tar.bz2 \
+ && tar -xjf nextcloud.tar.bz2 -C $WWW_PATH/ \
+ && rm nextcloud.tar.bz2 \
  && rm -rf $NEXTCLOUD_PATH/updater \
  && mkdir -p $NEXTCLOUD_PATH/data \
  && mkdir -p $NEXTCLOUD_PATH/custom_apps \
