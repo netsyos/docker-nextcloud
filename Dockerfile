@@ -59,10 +59,8 @@ RUN curl -fsSL -o nextcloud.tar.bz2 "https://download.nextcloud.com/server/relea
  && curl -fsSL -o nextcloud.tar.bz2.asc \
     "https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VERSION}.tar.bz2.asc" \
  && export GNUPGHOME="$(mktemp -d)" \
- && key='28806A878AE423A28372792ED75899B9A724937A' \
- && (gpg  --yes --always-trust --keyserver pgp.mit.edu --recv-keys "$key" || \
-    gpg  --yes --always-trust --keyserver keyserver.pgp.com --recv-keys "$key" || \
-    gpg  --yes --always-trust --keyserver ha.pool.sks-keyservers.net --recv-keys "$key") \
+ && curl -fsSL -o nextcloud.asc "https://nextcloud.com/nextcloud.asc" \
+ && gpg --import nextcloud.asc \
  && gpg --batch --verify nextcloud.tar.bz2.asc nextcloud.tar.bz2 \
  && rm -r "$GNUPGHOME" nextcloud.tar.bz2.asc \
  && tar -xjf nextcloud.tar.bz2 -C $WWW_PATH/ \
