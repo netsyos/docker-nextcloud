@@ -51,12 +51,11 @@ RUN set -ex \
 #  \
 # && docker-php-ext-enable apcu redis memcached
 
-ENV NEXTCLOUD_VERSION 13.0.11
+ENV NEXTCLOUD_VERSION 14.0.7
 ENV WWW_PATH /var/www
 ENV NEXTCLOUD_PATH $WWW_PATH/nextcloud
 
-RUN curl -fsSL -o nextcloud.tar.bz2 \
-    "https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VERSION}.tar.bz2" \
+RUN curl -fsSL -o nextcloud.tar.bz2 "https://download.nextcloud.com/server/releases/nextcloud-13.0.11.tar.bz2" \
  && curl -fsSL -o nextcloud.tar.bz2.asc \
     "https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VERSION}.tar.bz2.asc"
 
