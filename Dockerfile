@@ -51,7 +51,7 @@ RUN set -ex \
 #  \
 # && docker-php-ext-enable apcu redis memcached
 
-ENV NEXTCLOUD_VERSION 15.0.4
+ENV NEXTCLOUD_VERSION 15.0.14
 ENV WWW_PATH /var/www
 ENV NEXTCLOUD_PATH $WWW_PATH/nextcloud
 
